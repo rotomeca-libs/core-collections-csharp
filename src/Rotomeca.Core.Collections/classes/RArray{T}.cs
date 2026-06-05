@@ -1,8 +1,9 @@
+using Rotomeca.Core.Collections.Interfaces;
 namespace Rotomeca.Core.Collections
 {
-    public class RArray<T> : Interfaces.IRArray<T>, IReadOnlyList<T>
+    public class RArray<T> : IRArray<T>
 #if NET7_0_OR_GREATER
-    , Interfaces.IRArrayFactory<T, RArray<T>>
+    , IRArrayFactory<T, RArray<T>>
 #endif
     {
         private List<T> _values;
@@ -24,16 +25,18 @@ namespace Rotomeca.Core.Collections
 
         public T this[int index]
         {
-            get => At(index); set
-            {
-                if (index >= 0) _values[index] = value;
-                else
-                {
-                    var realIndex = _values.Count + index;
+            get => At(index); set => _set(index, value);
+        }
 
-                    if (realIndex < 0) throw new IndexOutOfRangeException($"Index {index} est hors bornes pour un tableau de taille {_values.Count}.");
-                    [realIndex] = value;
-                }
+        private void _set(int index, T value)
+        {
+            if (index >= 0) _values[index] = value;
+            else
+            {
+                var realIndex = _values.Count + index;
+
+                if (realIndex < 0) throw new IndexOutOfRangeException($"Index {index} est hors bornes pour un tableau de taille {_values.Count}.");
+                _set(realIndex, value);
             }
         }
 
@@ -63,12 +66,38 @@ namespace Rotomeca.Core.Collections
 
         public T? Pop()
         {
+            T? returnedValue;
+            if (Length > 0)
+            {
+                returnedValue = At(-1);
+                _values.RemoveAt(Length - 1);
+            }
+            else returnedValue = default;
 
+            return returnedValue;
         }
 
-        public int Unshift(params T[] items);
-        public T? Shift();
-        public IRArray<T> Splice(int start, int? deleteCount = null, params T[] items);
+        public int Unshift(params T[] items)
+        {
+            _values.InsertRange(0, items);
+            return Length;
+        }
+        public T? Shift()
+        {
+            T? returnValue;
+            if (Length > 0)
+            {
+                returnValue = _values[0];
+                _values.RemoveAt(0);
+            }
+            else returnValue = default;
+
+            return returnValue;
+        }
+        public IRArray<T> Splice(int start, int? deleteCount = null, params T[] items)
+        {
+
+        }
         public IRArray<T> Fill(T value, int start = 0, int? end = null);
         public IRArray<T> CopyWithin(int target, int start = 0, int? end = null);
         public IRArray<T> Sort(Comparison<T>? compareFn = null);
