@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Rotomeca.Core.Collections.Interfaces;
 namespace Rotomeca.Core.Collections
 {
@@ -82,6 +83,7 @@ namespace Rotomeca.Core.Collections
             _values.InsertRange(0, items);
             return Length;
         }
+
         public T? Shift()
         {
             T? returnValue;
@@ -94,27 +96,98 @@ namespace Rotomeca.Core.Collections
 
             return returnValue;
         }
+
         public IRArray<T> Splice(int start, int? deleteCount = null, params T[] items)
         {
+            int length = _values.Count;
 
+            int actualStart = start < 0
+                ? Math.Max(length + start, 0)
+                : Math.Min(start, length);
+
+            int actualDeleteCount = deleteCount.HasValue
+                ? Math.Min(Math.Max(deleteCount.Value, 0), length - actualStart)
+                : length - actualStart;
+
+            var removed = _values.GetRange(actualStart, actualDeleteCount);
+            _values.RemoveRange(actualStart, actualDeleteCount);
+
+            if (items.Length > 0)
+                _values.InsertRange(actualStart, items);
+
+            return new RArray<T>(removed);
         }
-        public IRArray<T> Fill(T value, int start = 0, int? end = null);
-        public IRArray<T> CopyWithin(int target, int start = 0, int? end = null);
-        public IRArray<T> Sort(Comparison<T>? compareFn = null);
-        public IRArray<T> Reverse();
 
-        public int IndexOf(T value);
-        public int LastIndexOf(T value);
-        public T? Find(Func<T, bool> fn);
-        public int FindIndex(Func<T, bool> fn);
-        public T? FindLast(Func<T, bool> fn);
-        public int FindLastIndex(Func<T, bool> fn);
-        public bool Includes(T value);
+        public IRArray<T> Fill(T value, int start = 0, int? end = null)
+        {
+            int length = _values.Count;
 
-        public bool Every(Func<T, bool> fn);
-        public bool Some(Func<T, bool> fn);
+            int actualStart = start < 0 ? Math.Max(length + start, 0) : Math.Min(start, length);
+            int actualEnd = end.HasValue
+                ? (end.Value < 0 ? Math.Max(length + end.Value, 0) : Math.Min(end.Value, length))
+                : length;
 
-        public IRArray<T> Filter(Func<T, bool> fn);
+            for (int i = actualStart; i < actualEnd; i++)
+                _values[i] = value;
+
+            return this;
+        }
+        public IRArray<T> CopyWithin(int target, int start = 0, int? end = null)
+        {
+            int length = _values.Count;
+
+            int actualTarget = target < 0 ? Math.Max(length + target, 0) : Math.Min(target, length);
+            int actualStart = start < 0 ? Math.Max(length + start, 0) : Math.Min(start, length);
+            int actualEnd = end.HasValue
+                ? (end.Value < 0 ? Math.Max(length + end.Value, 0) : Math.Min(end.Value, length))
+                : length;
+
+            int count = Math.Min(actualEnd - actualStart, length - actualTarget);
+            if (count <= 0) return this;
+
+            // Buffer intermédiaire pour gérer correctement les plages qui se chevauchent
+            var buffer = _values.GetRange(actualStart, count);
+
+            for (int i = 0; i < buffer.Count; i++)
+                _values[actualTarget + i] = buffer[i];
+
+            return this;
+        }
+        public IRArray<T> Sort(Comparison<T>? compareFn = null)
+        {
+            List<T> values = [.. _values];
+
+            if (compareFn is not null) values.Sort(compareFn);
+            else values.Sort();
+
+            return new RArray<T>(values);
+        }
+
+        public IRArray<T> Reverse()
+        {
+            List<T> values = [.. _values];
+
+            values.Reverse();
+            return new RArray<T>(values);
+        }
+
+        public int IndexOf(T value) => _values.IndexOf(value);
+        public int LastIndexOf(T value) => _values.LastIndexOf(value);
+        public T? Find(Func<T, bool> fn) => _values.Find((x) => fn(x));
+        public int FindIndex(Func<T, bool> fn) => _values.FindIndex((x) => fn(x));
+        public T? FindLast(Func<T, bool> fn) => _values.FindLast(x => fn(x));
+        public int FindLastIndex(Func<T, bool> fn) => _values.FindLastIndex(x => fn(x));
+        public bool Includes(T value) => _values.Contains(value);
+
+        public bool Every(Func<T, bool> fn) => _values.All(x => fn(x));
+        public bool Some(Func<T, bool> fn) => _values.Any(x => fn(x));
+
+        public IRArray<T> Filter(Func<T, bool> fn)
+        {
+            List<T> value = [.. _values];
+
+            return new RArray<T>(value.Where(x => fn(x)));
+        }
         public IRArray<TResult> Map<TResult>(Func<T, TResult> fn);
         public IRArray<TResult> FlatMap<TResult>(Func<T, IEnumerable<TResult>> fn);
         public TResult Reduce<TResult>(Func<TResult, T, TResult> fn, TResult initialValue);
