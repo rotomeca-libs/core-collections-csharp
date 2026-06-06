@@ -26,11 +26,19 @@
     <Version>1.0.0</Version>
     <Authors>Rotomeca</Authors>
     <Copyright>© Rotomeca</Copyright>
-    <Description>.</Description>
-    <PackageTags></PackageTags>
+    <Description>
+      Collection générique RArray&lt;T&gt; sans dépendance externe, inspirée de l'API Array
+      JavaScript. Fournit les mutateurs classiques (Push, Pop, Shift, Unshift, Splice, Fill,
+      CopyWithin, Sort, Reverse), les transformations fonctionnelles (Map, Filter, FlatMap, Reduce,
+      ReduceRight), les copies immuables (ToSorted, ToReversed, ToSpliced, With) et les helpers
+      d'itération (Entries, Keys, Values, ForEach). Cible netstandard2.0, netstandard2.1, net8.0,
+      net9.0 et net10.0.
+    </Description>
+    <PackageTags>
+      collections;array;javascript;functional;map;filter;reduce;flatmap;splice;generics;rotomeca;netstandard;linq;fluent;immutable;cross-platform</PackageTags>
     <PackageLicenseExpression>ISC</PackageLicenseExpression>
-    <PackageProjectUrl></PackageProjectUrl>
-    <RepositoryUrl></RepositoryUrl>
+    <PackageProjectUrl>https://github.com/rotomeca-libs/core-collections-csharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rotomeca-libs/core-collections-csharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.nuget.md</PackageReadmeFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -39,7 +47,7 @@
 
   <ItemGroup>
     <None Include="../../README.nuget.md" Pack="true" PackagePath="\" />
-    <None Include="assets\icon.png" Pack="true" PackagePath="\" />
+    <None Include="assets/icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
