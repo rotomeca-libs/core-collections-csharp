@@ -4,6 +4,7 @@ using System.Collections;
 
 namespace Rotomeca.Core.Collections
 {
+#if NET7_0_OR_GREATER
     /// <summary>
     /// Implémentation concrète de <see cref="IRArray{T}"/>, inspirée de l'API
     /// <see href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array">Array JavaScript</see>.
@@ -23,6 +24,27 @@ namespace Rotomeca.Core.Collections
     /// </para>
     /// </remarks>
     /// <typeparam name="T">Le type des éléments contenus dans la collection.</typeparam>
+#else
+    /// <summary>
+    /// Implémentation concrète de <see cref="IRArray{T}"/>, inspirée de l'API
+    /// <see href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array">Array JavaScript</see>.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Le backing store interne est une <see cref="List{T}"/> allouée à la construction.
+    /// Les méthodes mutantes (<see cref="Push(T[])"/>, <see cref="Pop"/>, <see cref="Sort"/>, etc.)
+    /// modifient cette liste en place. Les méthodes préfixées par <c>To</c>
+    /// (<see cref="ToReversed"/>, <see cref="ToSorted"/>, etc.) retournent toujours une nouvelle instance.
+    /// </para>
+    /// <para>
+    /// Cible les frameworks <c>netstandard2.0</c>, <c>netstandard2.1</c>, <c>net8.0</c>,
+    /// <c>net9.0</c> et <c>net10.0</c>. Sur <c>NET7_0_OR_GREATER</c>, la classe implémente
+    /// également <c>"IRArrayFactory{T, TSelf}"</c> et expose les membres statiques abstraits
+    /// <see cref="From"/>, <see cref="Of"/> et <see cref="FromAsync"/>.
+    /// </para>
+    /// </remarks>
+    /// <typeparam name="T">Le type des éléments contenus dans la collection.</typeparam>
+#endif
     public class RArray<T> : IRArray<T>
 #if NET7_0_OR_GREATER
     , IRArrayFactory<T, RArray<T>>
