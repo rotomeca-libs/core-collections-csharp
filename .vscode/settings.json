@@ -1,0 +1,10 @@
+{
+  "[csharp]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+    "[xml]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  }
+}

@@ -1,6 +1,3 @@
-<div align="center">
-<img height="90" alt="rotomeca-lib-csharp" src="https://raw.githubusercontent.com/rotomeca-libs/projects-pictures/494cadd82673710c227e454c08cabc41d089e0f8/rotomeca-lib-csharp.svg" />
-
 # Rotomeca.Core.Collections
 
 [![NuGet version](https://img.shields.io/nuget/v/Rotomeca.Core.Collections)](https://www.nuget.org/packages/Rotomeca.Core.Collections)
@@ -14,10 +11,6 @@ Collection `RArray<T>` pour C# qui expose l'API des tableaux JavaScript -
 sous forme d'une interface fluide et fortement typée.
 
 Conçu pour s'aligner avec son équivalent TypeScript dans [`@rotomeca/utils`](https://www.npmjs.com/package/@rotomeca/utils).
-
-</div>
-
-
 
 ## Installation
 

@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Rotomeca.Core.Collections/Rotomeca.Core.Collections.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Rotomeca.Core.Collections.Tests/Rotomeca.Core.Collections.Tests.csproj" />
+  </Folder>
+</Solution>
