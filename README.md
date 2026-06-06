@@ -9,8 +9,8 @@
 [![.NET](https://img.shields.io/badge/.NET-netstandard2.0%20%7C%20netstandard2.1%20%7C%20net8%20%7C%20net9%20%7C%20net10-512BD4)](https://dotnet.microsoft.com)
 [![Docs](https://img.shields.io/badge/docs-github.io-blue)](https://rotomeca-libs.github.io/core-collections-csharp/index.html)
 
-Collection `RArray<T>` pour C# qui expose l'API des tableaux JavaScript —
-**mutateurs**, **transformations fonctionnelles** et **copies immuables** —
+Collection `RArray<T>` pour C# qui expose l'API des tableaux JavaScript -
+**mutateurs**, **transformations fonctionnelles** et **copies immuables** -
 sous forme d'une interface fluide et fortement typée.
 
 Conçu pour s'aligner avec son équivalent TypeScript dans [`@rotomeca/utils`](https://www.npmjs.com/package/@rotomeca/utils).
