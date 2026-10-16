@@ -14,7 +14,7 @@
     <WarningsAsErrors />
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 
-    <!-- Source Link — navigation vers le code depuis le débogueur -->
+    <!-- Source Link — navigation vers le code depuis le débogueur (intégré au SDK .NET 8+) -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
@@ -23,7 +23,7 @@
     <!-- Métadonnées NuGet -->
     <PackageId>Rotomeca.Core.Collections</PackageId>
     <PackageIcon>icon.png</PackageIcon>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>Rotomeca</Authors>
     <Copyright>© Rotomeca</Copyright>
     <Description>
@@ -48,9 +48,5 @@
   <ItemGroup>
     <None Include="../../README.nuget.md" Pack="true" PackagePath="\" />
     <None Include="assets/icon.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
 </Project>
