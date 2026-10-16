@@ -1,6 +1,7 @@
 using Rotomeca.Core.Collections.Internal;
 using Rotomeca.Core.Collections.Interfaces;
 using System.Collections;
+using System.Collections.Immutable;
 
 namespace Rotomeca.Core.Collections
 {
@@ -108,6 +109,15 @@ namespace Rotomeca.Core.Collections
 
         /// <inheritdoc/>
         public int Length => _values.Count;
+
+        /// <summary>
+        /// Récupère le tableau en lecture seul
+        /// </summary>
+        /// <returns>Tableau en lecture seul</returns>
+        public IReadOnlyList<T> AsReadOnly()
+        {
+            return _values;
+        }
 
         /// <inheritdoc/>
         public T At(int index) => index >= 0 ? _AtPos((uint)index) : _AtNeg(index);
