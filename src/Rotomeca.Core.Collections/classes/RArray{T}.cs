@@ -1,7 +1,6 @@
 using Rotomeca.Core.Collections.Internal;
 using Rotomeca.Core.Collections.Interfaces;
 using System.Collections;
-using System.Collections.Immutable;
 
 namespace Rotomeca.Core.Collections
 {
