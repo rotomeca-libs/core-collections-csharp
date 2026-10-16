@@ -152,6 +152,7 @@ var arr = await RArray<int>.FromAsync(myAsyncEnumerable);
 .Values()                     → IEnumerable<T>
 .Join(separator = ",")        → string
 .ToArray()                    → T[]
+.AsReadOnly()                 → IReadOnlyList<T>
 ```
 
 ### Propriétés
